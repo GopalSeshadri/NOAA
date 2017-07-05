@@ -1,7 +1,6 @@
 ---
 output: github_document
 ---
-# NOAA package 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
@@ -12,20 +11,36 @@ knitr::opts_chunk$set(
 )
 ```
 
+# NOAA package 
+
 This package contains following functions.
+
 ## eq_clean_data()
-  It adds the column DATE and changes the type of LONGITUDE and LATITUDE columns.
+  It adds the column DATE and changes the type of LONGITUDE and LATITUDE columns. 
+  It takes a dataframe with NOAA earthquake data as input and returns a dataframe with DATE column and it also changes the type of LONGITUDE and LATITUDE column to numeric.
+  
 ## eq_location_clean()
-  It removes the country name from LOCATION_NAME column.
+  It removes the country name from LOCATION_NAME column and also makes it Title case.
+  This function makes an internal call to **eq_clean_data()** to ease the process. We could just call **eq_location_clean()** instead of calling both functions.
+  
 ## get_timeline()
-  The wrapper function for geom_timeline. Renders the timeline based on countries parameter.
+  The wrapper function for geom_timeline. Renders the timeline based on countries parameter. 
+  It takes the NOAA dataframe, a vector of countries and minimum and maximum values of timeline as input.
+  It makes internal call to **geom_timeline()** and renders the output based on the value we give at "countries" attribute. 
+  To render a timeline of earthquakes irrespective of countries we need to pass "*" in the countries parameter. 
+  
 ## eq_map()
-  It creates an interactive map with popup based on annot_col attribute.
+  It creates an interactive map with popup based on **annot_col** attribute.
+  It takes the NOAA dataframe and annot_col value as input.
+  The value of annot_col can be any column in the dataframe.
+  
 ## eq_create_label()
   It creates a label with Location, Magnitude and Total Deaths.
   
 This package contains the following geoms.
+
 ## geom_timeline()
   A geom to render the timeline of earthquake with magnitude and total deaths.
+  
 ## geom_timeline_label()
   A geom to add label to timeline of earthquake created by geom_timeline.
