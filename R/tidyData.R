@@ -81,6 +81,3 @@ eq_location_clean <- function(data)
 }
 
 
-# raw.noaa.df <- readr::read_tsv("data-raw/signif.txt")
-
-# noaa.df <- eq_location_clean(raw.noaa.df)
