@@ -1,0 +1,63 @@
+---
+title: "package_details"
+author: "Gopal Seshadri"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE, message = FALSE, warning = FALSE)
+```
+
+This package contains following functions.
+## eq_clean_data()
+  It adds the column DATE and changes the type of LONGITUDE and LATITUDE columns.
+```{r eq_clean_data, echo = TRUE, eval = TRUE, include = TRUE}
+raw.noaa.df <- readr::read_tsv(system.file("extdata", "signif.txt", package = "NOAA"))
+noaa.df <- NOAA::eq_clean_data(raw.noaa.df)
+str(noaa.df)
+```
+  
+  
+## eq_location_clean()
+  It removes the country name from LOCATION_NAME column and makes it to title case. It also has an internal call to eq_clean_data().
+```{r eq_location_clean, echo = TRUE, eval = TRUE, include = TRUE}
+raw.noaa.df <- readr::read_tsv(system.file("extdata", "signif.txt", package = "NOAA"))
+noaa.df <- NOAA::eq_location_clean(raw.noaa.df)
+str(noaa.df)
+```
+  
+  
+## get_timeline()
+  The wrapper function for geom_timeline. Renders the timeline based on countries parameter. Providing "*" to countries parameter returns a timeline without any country axis. On providing a vector of countries it will produce the timeline for only those countries.
+```{r get_timeline, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+NOAA::get_timeline(noaa.df, "*","2000-01-01","2010-01-01")
+NOAA::get_timeline(noaa.df, c("CHINA", "INDIA"),"2000-01-01","2010-01-01")
+```
+  For the output of get_timeline we could add the geom "geom_timeline_label()" which will add label to "n" number of earthquakes.
+```{r geom_timeline_label, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+NOAA::get_timeline(noaa.df, c("CHINA", "INDIA"),"2000-01-01","2010-01-01") +
+NOAA::geom_timeline_label(ggplot2::aes(x=DATE, location=LOCATION_NAME,xmin=xmin,xmax=xmax,size=EQ_PRIMARY,y=COUNTRY), n_max = 5)
+```
+
+
+## eq_map()
+  It creates an interactive map with popup based on annot_col attribute.
+```{r eq_map, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+mexico.df <- dplyr::filter(noaa.df, COUNTRY == "MEXICO" & lubridate::year(DATE) >= 2000)
+NOAA::eq_map(mexico.df, "DATE")
+```
+
+
+## eq_create_label()
+  It creates a label with Location, Magnitude and Total Deaths.
+```{r eq_create_label, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+mexico.df<- dplyr::mutate(mexico.df, popup_text = NOAA::eq_create_label(mexico.df))
+NOAA::eq_map(mexico.df, "popup_text")
+```
+  
+

@@ -1,0 +1,31 @@
+---
+output: github_document
+---
+# NOAA package 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+This package contains following functions.
+## eq_clean_data()
+  It adds the column DATE and changes the type of LONGITUDE and LATITUDE columns.
+## eq_location_clean()
+  It removes the country name from LOCATION_NAME column.
+## get_timeline()
+  The wrapper function for geom_timeline. Renders the timeline based on countries parameter.
+## eq_map()
+  It creates an interactive map with popup based on annot_col attribute.
+## eq_create_label()
+  It creates a label with Location, Magnitude and Total Deaths.
+  
+This package contains the following geoms.
+## geom_timeline()
+  A geom to render the timeline of earthquake with magnitude and total deaths.
+## geom_timeline_label()
+  A geom to add label to timeline of earthquake created by geom_timeline.
