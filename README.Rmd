@@ -56,7 +56,7 @@ NOAA::geom_timeline_label(ggplot2::aes(x=DATE, location=LOCATION_NAME,xmin=xmin,
 mexico.df <- dplyr::filter(noaa.df, COUNTRY == "MEXICO" & lubridate::year(DATE) >= 2000)
 NOAA::eq_map(mexico.df, "DATE")
 ```
-![Map With Date](README-mapwithdate.PNG)
+![Map With Date](README-mapwithdate.png)
 
 ## eq_create_label()
   It creates a label with Location, Magnitude and Total Deaths.
@@ -64,7 +64,7 @@ NOAA::eq_map(mexico.df, "DATE")
 mexico.df<- dplyr::mutate(mexico.df, popup_text = NOAA::eq_create_label(mexico.df))
 NOAA::eq_map(mexico.df, "popup_text")
 ```
-![Map With Label](README-mapwithlabel.PNG)
+![Map With Label](README-mapwithlabel.png)
   
 This package contains the following geoms.
 

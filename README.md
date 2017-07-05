@@ -100,14 +100,14 @@ NOAA::geom_timeline_label(ggplot2::aes(x=DATE, location=LOCATION_NAME,xmin=xmin,
 
 ![](README-geom_timeline_label-1.png) \#\# eq\_map() It creates an interactive map with popup based on *annot\_col* attribute. It takes the NOAA dataframe and annot\_col value as input. The value of annot\_col can be any column in the dataframe.
 
-![Map With Date](README-mapwithdate.PNG)
+![Map With Date](README-mapwithdate.png)
 
 eq\_create\_label()
 -------------------
 
 It creates a label with Location, Magnitude and Total Deaths.
 
-![Map With Label](README-mapwithlabel.PNG)
+![Map With Label](README-mapwithlabel.png)
 
 This package contains the following geoms.
 
