@@ -28,7 +28,7 @@ noaa.df <- NOAA::eq_clean_data(raw.noaa.df)
   
 ## eq_location_clean()
   It removes the country name from LOCATION_NAME column and also makes it Title case.
-  This function makes an internal call to **eq_clean_data()** to ease the process. We could just call **eq_location_clean()** instead of calling both functions.
+  This function makes an internal call to *eq_clean_data()* to ease the process. We could just call *eq_location_clean()* instead of calling both functions.
 ```{r eq_location_clean, echo = TRUE, eval = TRUE, include = TRUE}
 raw.noaa.df <- readr::read_tsv(system.file("extdata", "signif.txt", package = "NOAA"))
 noaa.df <- NOAA::eq_location_clean(raw.noaa.df)
@@ -37,7 +37,7 @@ noaa.df <- NOAA::eq_location_clean(raw.noaa.df)
 ## get_timeline()
   The wrapper function for geom_timeline. Renders the timeline based on countries parameter. 
   It takes the NOAA dataframe, a vector of countries and minimum and maximum values of timeline as input.
-  It makes internal call to **geom_timeline()** and renders the output based on the value we give at "countries" attribute. 
+  It makes internal call to *geom_timeline()* and renders the output based on the value we give at "countries" attribute. 
   To render a timeline of earthquakes irrespective of countries we need to pass "*" in the countries parameter. 
 ```{r get_timeline, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
 NOAA::get_timeline(noaa.df, "*","2000-01-01","2010-01-01")
@@ -49,21 +49,22 @@ NOAA::get_timeline(noaa.df, c("CHINA", "INDIA"),"2000-01-01","2010-01-01") +
 NOAA::geom_timeline_label(ggplot2::aes(x=DATE, location=LOCATION_NAME,xmin=xmin,xmax=xmax,size=EQ_PRIMARY,y=COUNTRY), n_max = 5)
 ```
 ## eq_map()
-  It creates an interactive map with popup based on **annot_col** attribute.
+  It creates an interactive map with popup based on *annot_col* attribute.
   It takes the NOAA dataframe and annot_col value as input.
   The value of annot_col can be any column in the dataframe.
-```{r eq_map, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+```{r eq_map, echo = TRUE, eval = FALSE, include = FALSE, fig.width = 8, fig.height = 4}
 mexico.df <- dplyr::filter(noaa.df, COUNTRY == "MEXICO" & lubridate::year(DATE) >= 2000)
 NOAA::eq_map(mexico.df, "DATE")
 ```
-  
+![Map With Date](README-mapwithdate.PNG)
+
 ## eq_create_label()
   It creates a label with Location, Magnitude and Total Deaths.
-```{r eq_create_label, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+```{r eq_create_label, echo = TRUE, eval = FALSE, include = FALSE, fig.width = 8, fig.height = 4}
 mexico.df<- dplyr::mutate(mexico.df, popup_text = NOAA::eq_create_label(mexico.df))
 NOAA::eq_map(mexico.df, "popup_text")
 ```
-
+![Map With Label](README-mapwithlabel.PNG)
   
 This package contains the following geoms.
 
