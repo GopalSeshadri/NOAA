@@ -2,7 +2,7 @@
 title: "package_details"
 author: "Gopal Seshadri"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::github_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
