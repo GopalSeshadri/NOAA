@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: yes
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -10,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
+
 
 # NOAA package 
 
@@ -22,13 +24,25 @@ This package contains following functions.
 ## eq_location_clean()
   It removes the country name from LOCATION_NAME column and also makes it Title case.
   This function makes an internal call to **eq_clean_data()** to ease the process. We could just call **eq_location_clean()** instead of calling both functions.
+```{r eq_clean_data, echo = FALSE, eval = TRUE, include = FALSE}
+raw.noaa.df <- readr::read_tsv(system.file("extdata", "signif.txt", package = "NOAA"))
+noaa.df <- NOAA::eq_location_clean(raw.noaa.df)
+```
   
 ## get_timeline()
   The wrapper function for geom_timeline. Renders the timeline based on countries parameter. 
   It takes the NOAA dataframe, a vector of countries and minimum and maximum values of timeline as input.
   It makes internal call to **geom_timeline()** and renders the output based on the value we give at "countries" attribute. 
   To render a timeline of earthquakes irrespective of countries we need to pass "*" in the countries parameter. 
-  
+```{r get_timeline, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+NOAA::get_timeline(noaa.df, "*","2000-01-01","2010-01-01")
+NOAA::get_timeline(noaa.df, c("CHINA", "INDIA"),"2000-01-01","2010-01-01")
+```
+  For the output of get_timeline we could add the geom "geom_timeline_label()" which will add label to "n" number of earthquakes.
+```{r geom_timeline_label, echo = TRUE, eval = TRUE, include = TRUE, fig.width = 8, fig.height = 4}
+NOAA::get_timeline(noaa.df, c("CHINA", "INDIA"),"2000-01-01","2010-01-01") +
+NOAA::geom_timeline_label(ggplot2::aes(x=DATE, location=LOCATION_NAME,xmin=xmin,xmax=xmax,size=EQ_PRIMARY,y=COUNTRY), n_max = 5)
+```
 ## eq_map()
   It creates an interactive map with popup based on **annot_col** attribute.
   It takes the NOAA dataframe and annot_col value as input.
